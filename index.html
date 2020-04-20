@@ -1,90 +1,98 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <title>LD 46 : Keep Corona live</title>
-    <style>
+    <style type="text/css">
+      @font-face {
+      font-family: 'Symbola';
+      src: url('fonts/Symbola.otf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      }
+
       body {
-        background-color: #ccc;
-        font-family:Raleway,"Helvetica Neue",Roboto,"Arial Nova","Segoe UI","Ubuntu Light",sans-serif;
-        }
+      background-color: #ccc;
+      font-family:Raleway,"Helvetica Neue",Roboto,"Arial Nova",sans-serif;
+      }
       h3 {
-        margin-block-end: 0.1em;
+      margin-block-end: 0.1em;
       }
       .left_panel {
-        float:left;
-        width:160px
+      float:left;
+      width:160px
       }
       #messages {
-        font-size:10px;
+      font-size:10px;
       }
       .right_panel {
-        padding-left:10px;
-        float: left;
-        width: 250px;
+      padding-left:10px;
+      float: left;
+      width: 250px;
       }
       canvas {
-        float:left;
-        background-color:white;
-        border: 1px solid #999
+      float:left;
+      background-color:white;
+      border: 1px solid #999
       }
       h3 {color:#399}
 
       #modal {
-        width:100%;
-        height:100%;
-        background-color:#ccc;
-        position:fixed;
-        left:0;top:0;
-        z-index:100;
+      width:100%;
+      height:100%;
+      background-color:#ccc;
+      position:fixed;
+      left:0;top:0;
+      z-index:100;
       }
       .welcome {
-        margin:30px auto;
-        width:80%;
-        background-color:white;
-        padding:20px;
-        border: 1px solid #666;
-        box-shadow: 3px 3px 5px 6px #666;
+      margin:30px auto;
+      width:80%;
+      background-color:white;
+      padding:20px;
+      border: 1px solid #666;
+      box-shadow: 3px 3px 5px 6px #666;
       }
     </style>
   </head>
   <body>
     <div id="modal">
-     <div class="welcome">
-      <h2>Welcome to Keep Corona live !</h2>
-      <p>This game is about helping a well known virus to survive.</p>
-      <p>Each level starts with a single sick person. Without action, this person will heal (or die in rare cases), preventing the virus to spread.</p>
-      <p>The game consists in selecting an attack in the left panel, then clicking a sick person (red face) on the screen, trying to contaminate other people.</p>
-      <p>A level is successful when there is at least one living sick person in the game at the end of the countdown.</p>
-      <h3>Disclaimer</h3>
-      <div>This game is a way to show the effects of people moves and lockdowns during a contagion, not an incentive to see people get sick or die.</div>
-      <div style="text-align:center; margin-top:20px;"><button style="padding:5px 10px;font-size:24px;font-weight:800" onclick="document.querySelector('#modal').style.display='none';run_level(0);">Play !</button></div>
-     </div>
+      <div class="welcome">
+        <h2>Welcome to Keep Corona live !</h2>
+        <p>This game is about helping a well known virus to survive.</p>
+        <p>Each level starts with a single sick person. Without action, this person will heal (or die in rare cases), preventing the virus to spread.</p>
+        <p>The game consists in selecting an attack in the left panel, then clicking a sick person (red face) on the screen, trying to contaminate other people.</p>
+        <p>A level is successful when there is at least one living sick person in the game at the end of the countdown.</p>
+        <h3>Disclaimer</h3>
+        <div>This game is a way to show the effects of people moves and lockdowns during a contagion, not an incentive to see people get sick or die.</div>
+        <div style="text-align:center; margin-top:20px;"><button style="padding:5px 10px;font-size:24px;font-weight:800" onclick="document.querySelector('#modal').style.display='none';run_level(0);">Play !</button></div>
+      </div>
     </div>
     <div class="left_panel">
-     <h3>Level <span id="level_n">1</span></h3>
-     <div id="level_name"></div>
-     <h3>Cases</h3>
-     <div id="cases">1</div>
-     <h3>Time left</h3>
-     <div id="timer">00:00:00</div>
-     <h3>Available attacks</h3>
-     <div id="attacks">None</div>
-     <div id="messages" style='background-color:#fee;margin-top:10px;padding-5px;'>
-     </div>
+      <h3>Level <span id="level_n">1</span></h3>
+      <div id="level_name"></div>
+      <h3>Cases</h3>
+      <div id="cases">1</div>
+      <h3>Time left</h3>
+      <div id="timer">00:00:00</div>
+      <h3>Available attacks</h3>
+      <div id="attacks">None</div>
+      <div id="messages" style='background-color:#fee;margin-top:10px;padding-5px;'>
+      </div>
     </div>
     <canvas id="c" width="680" height="450"></canvas>
     <div class="right_panel">
-     <h3>About attacks</h3>
-    <ul style="padding-inline-start:20px">
-     <li><strong>Cough</strong> : contaminates someone in the same area, short range, very effective, instant</li>
-     <li><strong>Sneeze</strong> : contaminates someone in the same area, medium range, medium effectiveness, instant</li>
-     <li><strong>Surface</strong> : contaminates an item that a person will pick up later, short range, medium effectiveness, short duration</li>
-     <li><strong>Aerosol</strong> : spreads the virus in the air. Short range, small effectiveness, may last 3 hours in real life.</li>
-    </ul> 
-    <script src="ld46.js"></script>
-    <audio id="attack_Cough" src="media/attack_Cough.mp3">oups</audio>
-    <audio id="attack_Sneeze" src="media/attack_Sneeze.mp3">oups</audio>
-    <audio id="attack_Surface" src="media/attack_Surface.mp3">oups</audio>
-    <audio id="attack_Aerosol" src="media/attack_Aerosol.mp3">oups</audio>
+      <h3>About attacks</h3>
+      <ul style="padding-inline-start:20px">
+        <li><strong>Cough</strong> : contaminates someone in the same area, short range, very effective, instant</li>
+        <li><strong>Sneeze</strong> : contaminates someone in the same area, medium range, medium effectiveness, instant</li>
+        <li><strong>Surface</strong> : contaminates an item that a person will pick up later, short range, medium effectiveness, short duration</li>
+        <li><strong>Aerosol</strong> : spreads the virus in the air. Short range, small effectiveness, may last 3 hours in real life.</li>
+      </ul>
+      <script src="ld46.js"></script>
+      <audio id="attack_Cough" src="media/attack_Cough.mp3">oups</audio>
+      <audio id="attack_Sneeze" src="media/attack_Sneeze.mp3">oups</audio>
+      <audio id="attack_Surface" src="media/attack_Surface.mp3">oups</audio>
+      <audio id="attack_Aerosol" src="media/attack_Aerosol.mp3">oups</audio>
   </body>
 </html>

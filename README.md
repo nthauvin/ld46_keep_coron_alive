@@ -10,3 +10,5 @@ A level is successful when there is at least one living sick person in the game 
 
 *Disclaimer*:
 This game is a way to show the effects of people moves and lockdowns during a contagion, not an incentive to see people get sick or die.
+
+Uses Symbola.otf from George Douros https://dn-works.com/ufas/ so that unicode symbols are displayed the same for everyone.
