@@ -75,15 +75,15 @@ const levels =
         ]
        },
        // 3
-       {name : "Go back to work !",
+       {name : "Go back to work ! 50% of population is imune.",
         attacks : ["Cough", "Sneeze", "Surface", "Aerosol"],
         confinment: 0.995,
         countdown:10000,
         homes :
-        [{x:10,y:10,people:1},{x:60,y:10,people:2},{x:70,y:10,people:2},
-         {x:110,y:10,people:2},{x:160,y:10,people:2},
-         {x:210,y:10,people:2},{x:260,y:10,people:2},
-         {x:310,y:10,people:2},{x:360,y:10,people:2},
+        [{x:10,y:10,people:1},{x:60,y:10,people:2,got_sick:true},
+         {x:110,y:10,people:2,got_sick:true},{x:160,y:10,people:2,got_sick:true},
+         {x:210,y:10,people:2,got_sick:true},{x:260,y:10,people:2,got_sick:true},
+         {x:310,y:10,people:2, got_sick:true},{x:360,y:10,people:2},
          {x:410,y:10,people:2},{x:460,y:10,people:2},
          {x:510,y:10,people:2},{x:560,y:10,people:2},
          {x:610,y:10,people:2}
@@ -109,7 +109,7 @@ function init_people(homes) {
                  y : h.y+10,
                  home_id : i,
                  sick_time : 0,
-                 got_sick : false,
+                 got_sick : h.got_sick == true, // not always initialised
                  status : "at",
                  place_id : "home",
                  for : 0
@@ -207,7 +207,7 @@ function run_level(n) {
     people = [];
     taints = [];
     init_people(level.homes);
-    people[0].sick_time = SICK_TIME;[0].got_sick = true;
+    people[0].sick_time = SICK_TIME;
     people[0].got_sick = true;
     document.getElementById("level_n").innerHTML = n+1;
     document.getElementById("level_name").innerHTML = level.name;
